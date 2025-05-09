@@ -41,6 +41,7 @@ const UserAppBar = (props: { user: User | null, title: ComponentType }) => {
 };
 
 const AuthUserAppBar = (props: { nav: AppRouterInstance, title: ComponentType }) => {
+    const router = useRouter()
     return (
         <AppBar
             content={() => (
@@ -52,7 +53,7 @@ const AuthUserAppBar = (props: { nav: AppRouterInstance, title: ComponentType })
                         />
                     )}
                     tools={() => (
-                        <IconButton>
+                        <IconButton onClick={() => router.push("/profile")}>
                             <AccountCircleIcon
                                 sx={{
                                     color: theme.palette.primary.contrastText,
@@ -68,6 +69,7 @@ const AuthUserAppBar = (props: { nav: AppRouterInstance, title: ComponentType })
 
 const AnonymUserAppBar = ({ nav }: { nav: AppRouterInstance, title: ComponentType }) => {
     const theme = useTheme()
+    const router = useRouter()
     return (
         <AppBar
             content={() => (
@@ -81,7 +83,7 @@ const AnonymUserAppBar = ({ nav }: { nav: AppRouterInstance, title: ComponentTyp
                         />
                     )}
                     tools={() => (
-                        <IconButton sx={{color: theme.palette.primary.contrastText}}>
+                        <IconButton onClick={() => router.push("/auth")} sx={{color: theme.palette.primary.contrastText}}>
                             <Typography>Войти</Typography>
                         </IconButton>
                     )}
