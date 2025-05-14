@@ -5,6 +5,7 @@ import { FileCell } from "@/cell-types/file-cell";
 import { ImageGalleryCell } from "@/cell-types/gallery-cell";
 import { MarkdownCell } from "@/cell-types/markdown-cell";
 import { PlainTextCell } from "@/cell-types/plain-text-cell";
+import { VideoCell } from "@/cell-types/video-cell";
 import { HighlightedTextCell } from "@/cell-types/warning-cell";
 import { Cell } from "@/utils/cell-ui";
 import { createContext, PropsWithChildren, use, useContext } from "react";
@@ -28,6 +29,7 @@ const CellRegistratorWrapper = (props: PropsWithChildren) => {
     cells["file-storage"] = {...FileCell}
     cells["gallery"] = {...ImageGalleryCell}
     cells["audio"] = {...AudioCell}
+    cells["video"] = {...VideoCell}
 
     return props.children
 }
