@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             title: row.title,
             author: row.author,
             description: row.description,
-            views: Number(row.views) / 2,
+            views: Number(row.views) ,
             createdAt: row.created_at,
             lastActiveAt: row.last_activity,
         }));

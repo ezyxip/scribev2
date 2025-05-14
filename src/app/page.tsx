@@ -47,9 +47,9 @@ export default function Home() {
 
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            // Добавляем закреплённый ноутбук (ID=8) в начало списка
-            const pinnedNotebook = notebooks.find((n) => Number(n.id) === 8);
-            const otherNotebooks = notebooks.filter((n) => Number(n.id) !== 8);
+            // Добавляем закреплённый ноутбук (ID=22) в начало списка
+            const pinnedNotebook = notebooks.find((n) => Number(n.id) === 22);
+            const otherNotebooks = notebooks.filter((n) => Number(n.id) !== 22);
 
             if (pinnedNotebook) {
                 setFilteredNotebooks([pinnedNotebook, ...otherNotebooks]);
@@ -132,7 +132,7 @@ export default function Home() {
                                             primary={
                                                 <>
                                                     {Number(notebook.id) ===
-                                                        8 && <PushPinIcon />}
+                                                        22 && <PushPinIcon />}
                                                     <Typography
                                                         variant="h6"
                                                         component="div"
