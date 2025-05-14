@@ -1,6 +1,8 @@
 'use client'
 
+import { AudioCell } from "@/cell-types/audio-cell";
 import { FileCell } from "@/cell-types/file-cell";
+import { ImageGalleryCell } from "@/cell-types/gallery-cell";
 import { MarkdownCell } from "@/cell-types/markdown-cell";
 import { PlainTextCell } from "@/cell-types/plain-text-cell";
 import { HighlightedTextCell } from "@/cell-types/warning-cell";
@@ -24,6 +26,8 @@ const CellRegistratorWrapper = (props: PropsWithChildren) => {
     cells["markdown"] = {...MarkdownCell}
     cells["highlighted"] = {...HighlightedTextCell}
     cells["file-storage"] = {...FileCell}
+    cells["gallery"] = {...ImageGalleryCell}
+    cells["audio"] = {...AudioCell}
 
     return props.children
 }
