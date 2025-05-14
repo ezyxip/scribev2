@@ -27,6 +27,7 @@
     "typeorm": "^0.3.23"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^20",
     "@types/pg": "^8.15.1",
     "@types/react": "^19",
