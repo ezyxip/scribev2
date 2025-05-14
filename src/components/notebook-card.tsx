@@ -12,6 +12,7 @@ import {
 import { Delete, Star } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { Notebook } from "@/api/notebook-api";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 const StyledCard = styled(Card)(({ theme }) => ({
     minWidth: 275,
@@ -31,9 +32,11 @@ const DeleteButton = styled(IconButton)({
 });
 
 export const NotebookCard = ({
+    onClick,
     notebook,
     onDelete,
 }: {
+    onClick: () => void;
     notebook: Notebook;
     onDelete: (id: string) => void;
 }) => {
@@ -45,18 +48,12 @@ export const NotebookCard = ({
             transition={{ duration: 0.3 }}
         >
             <StyledCard>
-                <CardContent>
+                <CardContent onClick={onClick}>
                     <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
                         {notebook.title}
                     </Typography>
-                    <Typography color="text.secondary" gutterBottom sx={{ fontStyle: "italic" }}>
-                        @{notebook.author}
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 1.5, color: "text.primary" }}>
-                        {notebook.description}
-                    </Typography>
                     <Stack direction="row" alignItems="center" spacing={0.5}>
-                        <Star fontSize="small" color="warning" />
+                        <VisibilityOutlinedIcon fontSize="small" />
                         <Typography sx={{ fontWeight: 500 }}>{notebook.views}</Typography>
                     </Stack>
                 </CardContent>

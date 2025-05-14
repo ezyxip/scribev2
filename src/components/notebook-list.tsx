@@ -26,9 +26,7 @@ export const NotebooksList = ({ notebooks, onDelete, onClick }: Props) => {
             }}
         >
             {notebooks.map((notebook) => (
-                <Box key={notebook.id} onClick={() => onClick(notebook.id)}>
-                    <NotebookCard notebook={notebook} onDelete={onDelete} />
-                </Box>
+                <NotebookCard onClick = {() => onClick(notebook.id)} key={notebook.id} notebook={notebook} onDelete={onDelete} />
             ))}
         </Box>
     );

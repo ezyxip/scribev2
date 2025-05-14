@@ -25,13 +25,13 @@ export class PostgresNotebookApi implements NotebookApi {
 
     get = async (count: number, page: number) => {
         const useNickname = localStorage.getItem("currentUser"); // Или из стора (Redux/Zustand)
-        if (!useNickname) throw new Error("User ID not found");
+        // if (!useNickname) throw new Error("User ID not found");
 
         const res = await fetch(
             `${this.apiBase}/get?count=${count}&page=${page}`,
             {
                 headers: {
-                    "x-user-nickname": useNickname, // <- Вот так передаём
+                    "x-user-nickname": useNickname || "", // <- Вот так передаём
                 },
             }
         );

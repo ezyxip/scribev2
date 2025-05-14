@@ -1,5 +1,6 @@
 "use client";
-import { useUser } from "@/hooks/use-user";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
     Grid,
@@ -10,7 +11,7 @@ import {
     Button,
     useMediaQuery,
 } from "@mui/material";
-import { useState } from "react";
+import { useUser } from "@/hooks/use-user";
 import { useNotebooks } from "@/hooks/use-notebooks";
 import { useSort } from "@/hooks/use-sort";
 import LoadingSpinner from "@/components/loader-mock";
@@ -28,6 +29,7 @@ export default function ProfilePage() {
     const router = useRouter();
     const [tabValue, setTabValue] = useState(0);
     const [page, setPage] = useState(0);
+
     const {
         notebooks,
         addNotebook,
@@ -35,14 +37,41 @@ export default function ProfilePage() {
         isLoading: notebookLoading,
         error: notebookError,
     } = useNotebooks(page, 10);
+
     const sort = useSort();
-    const isMobile = useMediaQuery((theme: any) =>
-        theme.breakpoints.down("sm")
-    );
+    const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down("sm"));
 
     const handleNotebookClick = (id: string) => {
         router.push(`/note-edit/${id}`);
     };
+
+    // Фильтрация и сортировка
+    const sortedNotebooks = [...notebooks]
+        .filter((e) => e.author === user?.nickname)
+        .sort((a, b) => {
+            const { sortBy, sortOrder } = sort;
+            const isAsc = sortOrder === "asc";
+            const valA = a[sortBy];
+            const valB = b[sortBy];
+
+            if (typeof valA === "string" && typeof valB === "string") {
+                return isAsc
+                    ? valA.localeCompare(valB)
+                    : valB.localeCompare(valA);
+            }
+
+            if (valA instanceof Date && valB instanceof Date) {
+                return isAsc
+                    ? valA.getTime() - valB.getTime()
+                    : valB.getTime() - valA.getTime();
+            }
+
+            if (typeof valA === "number" && typeof valB === "number") {
+                return isAsc ? valA - valB : valB - valA;
+            }
+
+            return 0; // Защита от некорректных типов
+        });
 
     if (isLoading || notebookLoading) return <LoadingSpinner />;
     if (error || notebookError)
@@ -102,9 +131,7 @@ export default function ProfilePage() {
                                     />
                                 </Toolbar>
                                 <NotebooksList
-                                    notebooks={notebooks.filter(
-                                        (e) => e.author === user?.nickname
-                                    )}
+                                    notebooks={sortedNotebooks}
                                     onDelete={deleteNotebook}
                                     onClick={handleNotebookClick}
                                 />

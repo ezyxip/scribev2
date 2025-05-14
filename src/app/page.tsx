@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNotebookExtApi } from "@/wrappers/notebook-ext-api-wrapper";
+import { useRouter } from "next/navigation";
+import PushPinIcon from "@mui/icons-material/PushPin";
 
 export default function Home() {
     const notebookApi = useNotebookExtApi();
@@ -25,6 +27,7 @@ export default function Home() {
     const [filteredNotebooks, setFilteredNotebooks] = useState<Notebook[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const loadNotebooks = async () => {
@@ -44,8 +47,17 @@ export default function Home() {
 
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            setFilteredNotebooks(notebooks);
+            // Добавляем закреплённый ноутбук (ID=8) в начало списка
+            const pinnedNotebook = notebooks.find((n) => Number(n.id) === 8);
+            const otherNotebooks = notebooks.filter((n) => Number(n.id) !== 8);
+
+            if (pinnedNotebook) {
+                setFilteredNotebooks([pinnedNotebook, ...otherNotebooks]);
+            } else {
+                setFilteredNotebooks(notebooks);
+            }
         } else {
+            // Без закрепа — просто фильтруем по заголовку
             const filtered = notebooks.filter((notebook) =>
                 notebook.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -74,7 +86,7 @@ export default function Home() {
                     <TextField
                         fullWidth
                         variant="outlined"
-                        placeholder="Search notebooks by title..."
+                        placeholder="Поиск ноутбуков по названию..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         InputProps={{
@@ -99,23 +111,35 @@ export default function Home() {
                         mt={4}
                     >
                         {searchQuery
-                            ? "No notebooks match your search"
-                            : "No notebooks available"}
+                            ? "Ничего не найдено по вашему запросу"
+                            : "Нет доступных ноутбуков"}
                     </Typography>
                 ) : (
                     <Paper elevation={3}>
                         <List>
                             {filteredNotebooks.map((notebook, index) => (
                                 <div key={notebook.id}>
-                                    <ListItem alignItems="flex-start">
+                                    <ListItem
+                                        alignItems="flex-start"
+                                        onClick={() => {
+                                            router.push(
+                                                "/note-edit/" + notebook.id
+                                            );
+                                        }}
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         <ListItemText
                                             primary={
-                                                <Typography
-                                                    variant="h6"
-                                                    component="div"
-                                                >
-                                                    {notebook.title}
-                                                </Typography>
+                                                <>
+                                                    {Number(notebook.id) ===
+                                                        8 && <PushPinIcon />}
+                                                    <Typography
+                                                        variant="h6"
+                                                        component="div"
+                                                    >
+                                                        {notebook.title}
+                                                    </Typography>
+                                                </>
                                             }
                                             secondary={
                                                 <>
@@ -125,8 +149,7 @@ export default function Home() {
                                                         color="text.primary"
                                                         display="block"
                                                     >
-                                                        Author:{" "}
-                                                        {notebook.author}
+                                                        Автор: {notebook.author}
                                                     </Typography>
                                                     <Typography
                                                         component="span"
@@ -140,26 +163,26 @@ export default function Home() {
                                                         }}
                                                     >
                                                         <Chip
-                                                            label={`Views: ${notebook.views}`}
+                                                            label={`Просмотры: ${notebook.views}`}
                                                             size="small"
                                                             variant="outlined"
-                                                            component="span" // Добавьте это
+                                                            component="span"
                                                         />
                                                         <Chip
-                                                            label={`Created: ${formatDate(
+                                                            label={`Создан: ${formatDate(
                                                                 notebook.createdAt
                                                             )}`}
                                                             size="small"
                                                             variant="outlined"
-                                                            component="span" // Добавьте это
+                                                            component="span"
                                                         />
                                                         <Chip
-                                                            label={`Last active: ${formatDate(
+                                                            label={`Обновлён: ${formatDate(
                                                                 notebook.lastActiveAt
                                                             )}`}
                                                             size="small"
                                                             variant="outlined"
-                                                            component="span" // Добавьте это
+                                                            component="span"
                                                         />
                                                     </Typography>
                                                 </>
