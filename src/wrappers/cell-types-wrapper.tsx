@@ -1,7 +1,9 @@
 'use client'
 
+import { FileCell } from "@/cell-types/file-cell";
 import { MarkdownCell } from "@/cell-types/markdown-cell";
 import { PlainTextCell } from "@/cell-types/plain-text-cell";
+import { HighlightedTextCell } from "@/cell-types/warning-cell";
 import { Cell } from "@/utils/cell-ui";
 import { createContext, PropsWithChildren, use, useContext } from "react";
 
@@ -20,6 +22,8 @@ const CellRegistratorWrapper = (props: PropsWithChildren) => {
 
     cells["plain-text"] = {...PlainTextCell}
     cells["markdown"] = {...MarkdownCell}
+    cells["highlighted"] = {...HighlightedTextCell}
+    cells["file-storage"] = {...FileCell}
 
     return props.children
 }

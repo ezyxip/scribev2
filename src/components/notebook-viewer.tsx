@@ -27,8 +27,8 @@ export default function NotebookViewer(props: ViewerProps) {
                 <Paper
                     key={cell.id}
                     sx={{
-                        marginTop: 2,
-                        padding: 2,
+                        marginTop: 1,
+                        padding: 1,
                         backgroundColor: 'background.paper',
                         border: 'none',
                         overflow: 'visible' // Если нужны выпадающие элементы

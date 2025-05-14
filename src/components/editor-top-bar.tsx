@@ -13,13 +13,14 @@ type EditorTopBarProps = {
 export default function EditorTopBar(props: EditorTopBarProps) {
     return (
         <ToggleableTopBar isVisible={props.isVisible}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center"}}>
                 <IconButton onClick={props.onClose}>
                     <Close/>
                 </IconButton>
                 <IconButton onClick={props.onDelete}>
                     <Delete/>
                 </IconButton>
+                <Box sx={{width: "2em"}}/>
                 <props.items/>
             </Box>
         </ToggleableTopBar>

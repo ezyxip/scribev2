@@ -40,7 +40,7 @@ export default function NotebookPage() {
     const [isEditMode, setIsEditMode] = useState(false);
 
     // Проверка прав на редактирование (пока всегда true)
-    const canEdit = useCallback(() => notebook?.author === user?.nickname , []);
+    const canEdit = useCallback(() => notebook?.author === user?.nickname , [user, notebook]);
 
     const handleUpdateCell = useCallback(
         async (cellId: string, newContent: any) => {
