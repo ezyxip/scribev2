@@ -25,7 +25,6 @@ export default function NotebookEditor(props: EditorProps) {
 
     // Синхронизация с внешними изменениями
     useEffect(() => {
-        setLocalTitle(props.title);
         setCells(cells.map((e, i) => ({...e, id : props.cells[i].id})));
     }, [props.title, props.cells]);
 
