@@ -22,7 +22,7 @@ const PlainTextEditor = (props: CellProps) => {
 
 const PlainTextPreviewer = (props: CellProps) => {
     return (
-        <Typography>{props.state}</Typography>
+        <Typography whiteSpace="pre-line">{props.state}</Typography>
     )
 }
 

@@ -5,7 +5,7 @@ import { useNotebookApi } from "@/wrappers/UseNotebookApiWrapper";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
 import LoadingSpinner from "@/components/loader-mock";
-import { Box, Container, Typography, IconButton } from "@mui/material";
+import { Box, Container, Typography, IconButton, Grid } from "@mui/material";
 import ModalErrorAlert from "@/components/modal-error-alert";
 import { Notebook } from "@/api/notebook-api";
 import { useNotebookExtApi } from "@/wrappers/notebook-ext-api-wrapper";
@@ -241,20 +241,32 @@ export default function NotebookPage() {
                 )}
             />
 
-            <Box sx={{ mt: 8 }}>
-                {isEditMode ? (
-                    <NotebookEditor
-                        title={notebook.title}
-                        setTitle={handleTitleChange}
-                        cells={uiCells}
-                        addCell={handleAddCell}
-                        deleteCell={handleDeleteCell}
-                        updateCell={handleUpdateCell}
-                    />
-                ) : (
-                    <NotebookViewer title={notebook.title} cells={uiCells} />
-                )}
-            </Box>
+            <Grid
+                container
+                sx={{ width: "100%" }}
+                justifyContent={"center"}
+                alignItems={"center"}
+            >
+                <Grid size={{ xs: 11, sm: 8, md: 6, lg: 5 }}>
+                    <Box sx={{ mt: 8 }}>
+                        {isEditMode ? (
+                            <NotebookEditor
+                                title={notebook.title}
+                                setTitle={handleTitleChange}
+                                cells={uiCells}
+                                addCell={handleAddCell}
+                                deleteCell={handleDeleteCell}
+                                updateCell={handleUpdateCell}
+                            />
+                        ) : (
+                            <NotebookViewer
+                                title={notebook.title}
+                                cells={uiCells}
+                            />
+                        )}
+                    </Box>
+                </Grid>
+            </Grid>
         </>
     );
 }
