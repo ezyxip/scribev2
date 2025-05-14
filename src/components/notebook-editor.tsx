@@ -24,10 +24,10 @@ export default function NotebookEditor(props: EditorProps) {
     const isPanelOpen = focus != null;
 
     // Синхронизация с внешними изменениями
-    // useEffect(() => {
-    //     setLocalTitle(props.title);
-    //     setCells(props.cells);
-    // }, [props.title, props.cells]);
+    useEffect(() => {
+        setLocalTitle(props.title);
+        setCells(cells.map((e, i) => ({...e, id : props.cells[i].id})));
+    }, [props.title, props.cells]);
 
     // Дебаунс для заголовка
     const debouncedSetTitle = useMemo(
@@ -86,10 +86,12 @@ export default function NotebookEditor(props: EditorProps) {
     };
 
     const addCellHandler = (cell: Cell, type: string, index: number) => {
+        const newCell = { ...cell, id: crypto.randomUUID() }; // Создаем новую ячейку с новым ID
+        props.addCell(newCell, type, index); // Передаем новую ячейку с правильным ID
         const newCells = [...cells];
-        newCells.splice(index, 0, { ...cell, id: crypto.randomUUID() });
+        newCells.splice(index, 0, newCell);
         setCells(newCells);
-        props.addCell(cell, type, index);
+
     };
 
     const deleteCellHandler = (id: string) => {

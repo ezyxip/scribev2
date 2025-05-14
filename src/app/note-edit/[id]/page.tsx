@@ -40,7 +40,7 @@ export default function NotebookPage() {
     const [isEditMode, setIsEditMode] = useState(false);
 
     // Проверка прав на редактирование (пока всегда true)
-    const canEdit = useCallback(() => true, []);
+    const canEdit = useCallback(() => notebook?.author === user?.nickname , []);
 
     const handleUpdateCell = useCallback(
         async (cellId: string, newContent: any) => {
@@ -135,6 +135,8 @@ export default function NotebookPage() {
                 newCells.splice(index, 0, newCell);
                 return newCells;
             });
+
+            return newCell;
         } catch (err) {
             console.error("Failed to add cell:", err);
             setError("Не удалось добавить ячейку");
