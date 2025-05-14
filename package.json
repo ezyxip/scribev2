@@ -16,14 +16,19 @@
     "@mui/lab": "^7.0.0-beta.12",
     "@mui/material": "^7.1.0",
     "@mui/material-nextjs": "^7.1.0",
+    "framer-motion": "^12.10.4",
     "hyperagent": "^0.2.10",
+    "lodash-es": "^4.17.21",
     "next": "15.3.2",
+    "pg": "^8.15.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.23"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.15.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5"

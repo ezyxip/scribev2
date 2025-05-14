@@ -1,4 +1,8 @@
 import { theme } from "@/utils/mui-theme";
+import { CellApiWrapper } from "@/wrappers/cell-api-wrapper";
+import { CellWrapper } from "@/wrappers/cell-types-wrapper";
+import { NotebookExtApiWrapper } from "@/wrappers/notebook-ext-api-wrapper";
+import { NotebookApiWrapper } from "@/wrappers/UseNotebookApiWrapper";
 import { UserApiWrapper } from "@/wrappers/UserApiWrapper";
 import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
@@ -19,7 +23,17 @@ export default function RootLayout({
             <body>
                 <AppRouterCacheProvider>
                     <ThemeProvider theme={theme}>
-                        <UserApiWrapper>{children}</UserApiWrapper>
+                        <UserApiWrapper>
+                            <NotebookApiWrapper>
+                                <CellWrapper>
+                                    <CellApiWrapper>
+                                        <NotebookExtApiWrapper>
+                                            {children}
+                                        </NotebookExtApiWrapper>
+                                    </CellApiWrapper>
+                                </CellWrapper>
+                            </NotebookApiWrapper>
+                        </UserApiWrapper>
                     </ThemeProvider>
                 </AppRouterCacheProvider>
             </body>
