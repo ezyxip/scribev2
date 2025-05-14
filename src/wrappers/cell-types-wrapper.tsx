@@ -1,5 +1,6 @@
 'use client'
 
+import { MarkdownCell } from "@/cell-types/markdown-cell";
 import { PlainTextCell } from "@/cell-types/plain-text-cell";
 import { Cell } from "@/utils/cell-ui";
 import { createContext, PropsWithChildren, use, useContext } from "react";
@@ -18,6 +19,7 @@ const CellRegistratorWrapper = (props: PropsWithChildren) => {
     const cells = useContext(cellTypeContext);
 
     cells["plain-text"] = {...PlainTextCell}
+    cells["markdown"] = {...MarkdownCell}
 
     return props.children
 }

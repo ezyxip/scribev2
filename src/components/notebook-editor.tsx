@@ -24,10 +24,10 @@ export default function NotebookEditor(props: EditorProps) {
     const isPanelOpen = focus != null;
 
     // Синхронизация с внешними изменениями
-    useEffect(() => {
-        setLocalTitle(props.title);
-        setCells(props.cells);
-    }, [props.title, props.cells]);
+    // useEffect(() => {
+    //     setLocalTitle(props.title);
+    //     setCells(props.cells);
+    // }, [props.title, props.cells]);
 
     // Дебаунс для заголовка
     const debouncedSetTitle = useMemo(
