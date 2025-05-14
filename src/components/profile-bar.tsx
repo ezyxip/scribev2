@@ -6,6 +6,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import AppBar, { MainLabel, StandartToolBar } from "./app-bar";
 import { useUserApi } from "@/wrappers/UserApiWrapper";
+import { ArrowBack } from "@mui/icons-material";
 
 type ProfileAppBarProps = {
     nickname: string;
@@ -35,6 +36,14 @@ export function ProfileAppBar(props: ProfileAppBarProps) {
                                 gap: 2,
                             }}
                         >
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={() => router.push("/")}
+                                sx={{ mr: 2 }}
+                            >
+                                <ArrowBack />
+                            </IconButton>
                             {/* Иконка профиля слева */}
                             <Icon>
                                 <AccountCircleIcon
@@ -69,4 +78,3 @@ export function ProfileAppBar(props: ProfileAppBarProps) {
         />
     );
 }
-

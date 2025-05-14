@@ -15,6 +15,8 @@ import {
     Paper,
     Divider,
     Chip,
+    useTheme,
+    useMediaQuery,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNotebookExtApi } from "@/wrappers/notebook-ext-api-wrapper";
@@ -28,6 +30,8 @@ export default function Home() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => {
         const loadNotebooks = async () => {
@@ -47,7 +51,6 @@ export default function Home() {
 
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            // Добавляем закреплённый ноутбук (ID=22) в начало списка
             const pinnedNotebook = notebooks.find((n) => Number(n.id) === 22);
             const otherNotebooks = notebooks.filter((n) => Number(n.id) !== 22);
 
@@ -57,7 +60,6 @@ export default function Home() {
                 setFilteredNotebooks(notebooks);
             }
         } else {
-            // Без закрепа — просто фильтруем по заголовку
             const filtered = notebooks.filter((notebook) =>
                 notebook.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -151,20 +153,22 @@ export default function Home() {
                                                     >
                                                         Автор: {notebook.author}
                                                     </Typography>
-                                                    <Typography
+                                                    <Box
                                                         component="span"
-                                                        variant="body2"
-                                                        color="text.primary"
-                                                        display="block"
                                                         sx={{
                                                             display: "flex",
+                                                            flexWrap: "wrap",
                                                             gap: 1,
                                                             mt: 1,
                                                         }}
                                                     >
                                                         <Chip
                                                             label={`Просмотры: ${notebook.views}`}
-                                                            size="small"
+                                                            size={
+                                                                isMobile
+                                                                    ? "small"
+                                                                    : "medium"
+                                                            }
                                                             variant="outlined"
                                                             component="span"
                                                         />
@@ -172,7 +176,11 @@ export default function Home() {
                                                             label={`Создан: ${formatDate(
                                                                 notebook.createdAt
                                                             )}`}
-                                                            size="small"
+                                                            size={
+                                                                isMobile
+                                                                    ? "small"
+                                                                    : "medium"
+                                                            }
                                                             variant="outlined"
                                                             component="span"
                                                         />
@@ -180,11 +188,15 @@ export default function Home() {
                                                             label={`Обновлён: ${formatDate(
                                                                 notebook.lastActiveAt
                                                             )}`}
-                                                            size="small"
+                                                            size={
+                                                                isMobile
+                                                                    ? "small"
+                                                                    : "medium"
+                                                            }
                                                             variant="outlined"
                                                             component="span"
                                                         />
-                                                    </Typography>
+                                                    </Box>
                                                 </>
                                             }
                                         />

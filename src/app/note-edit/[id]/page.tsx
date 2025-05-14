@@ -22,6 +22,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useUser } from "@/hooks/use-user";
 import ErrorModal from "@/components/modal-error-alert";
+import { ArrowBack } from "@mui/icons-material";
 
 export default function NotebookPage() {
     const params = useParams();
@@ -40,7 +41,10 @@ export default function NotebookPage() {
     const [isEditMode, setIsEditMode] = useState(false);
 
     // Проверка прав на редактирование (пока всегда true)
-    const canEdit = useCallback(() => notebook?.author === user?.nickname , [user, notebook]);
+    const canEdit = useCallback(
+        () => notebook?.author === user?.nickname,
+        [user, notebook]
+    );
 
     const handleUpdateCell = useCallback(
         async (cellId: string, newContent: any) => {
@@ -193,14 +197,20 @@ export default function NotebookPage() {
                 content={() => (
                     <StandartToolBar
                         title={() => (
-                            <MainLabel
-                                title={() => (
-                                    <Typography variant="h6">
-                                        {notebook.title}
-                                    </Typography>
-                                )}
-                                onClick={() => router.push("/")}
-                            />
+                            <>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    onClick={() => router.push("/")}
+                                    sx={{ mr: 2 }}
+                                >
+                                    <ArrowBack />
+                                </IconButton>
+
+                                <Typography variant="h6">
+                                    {notebook.title}
+                                </Typography>
+                            </>
                         )}
                         tools={() => (
                             <Box sx={{ display: "flex", gap: 1 }}>
